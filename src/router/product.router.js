@@ -27,11 +27,12 @@ router.get("/products/:product_id", async (req, res) => {
 });
 
 router.post("/products", async (req, res) => {
+    const dataProducts = req.body
     await Products.sync()
     const createProduct = await Products.create({
-        product_name: faker.commerce.product(),
-        price: faker.commerce.price(),
-        is_stock: faker.datatype.boolean()
+        product_name: dataProducts.product_name,
+        price: dataProducts.price,
+        is_stock: dataProducts.is_stock
     })
     res.status(201).json({
         ok: true,
