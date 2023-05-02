@@ -41,8 +41,23 @@ router.post("/products", async (req, res) => {
     })
 });
 
-router.put("/products", (req, res) => {
-    res.send("I am a Router")
+router.put("/products/:product_id", async (req, res) => {
+    const id = req.params.product_id
+    const dataProducts = req.body
+    const updateProduct = await Products.update({
+        product_name: dataProducts.product_name,
+        price: dataProducts.price,
+        is_stock: dataProducts.is_stock
+    }, {
+        where: {
+            product_id: id
+        }
+    });
+    res.status(200).json({
+        ok: true,
+        status: 200,
+        body: updateProduct
+    })
 });
 
 router.delete("/products", (req, res) => {
