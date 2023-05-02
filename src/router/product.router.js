@@ -60,8 +60,18 @@ router.put("/products/:product_id", async (req, res) => {
     })
 });
 
-router.delete("/products", (req, res) => {
-    res.send("I am a Router")
+router.delete("/products/:product_id", async (req, res) => {
+    const id = req.params.product_id
+    const deleteProduct = await Products.destroy({
+        where: {
+            product_id: id
+        }
+    })
+    res.status(204).json({
+        ok: true,
+        status: 204,
+        body: deleteProduct
+    })
 });
 
 module.exports = router;
